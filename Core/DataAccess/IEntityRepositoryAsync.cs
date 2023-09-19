@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess
 {
-    public interface IEntityRepositoryAsyncBase<T> where T:class, IEntity, new()
+    public interface IEntityRepositoryAsync<T> where T:class, IEntity, new()
     {
         Task<T> GetAsync(Expression<Func<T, bool>> filter);
         Task<IList<T>> GetListAsync(Expression<Func<T,bool>> filter = null);
