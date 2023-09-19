@@ -10,10 +10,10 @@ namespace Core.DataAccess
 {
     public interface IEntityRepositoryAsyncBase<T> where T:class, IEntity, new()
     {
-        Task<T> Get(Expression<Func<T, bool>> filter);
-        Task<IList<T>> GetList(Expression<Func<T,bool>> filter = null);
-        Task<T> Add(T entity);
-        Task<T> Update(T entity);
-        Task<T> Delete(T entity);
+        Task<T> GetAsync(Expression<Func<T, bool>> filter);
+        Task<IList<T>> GetListAsync(Expression<Func<T,bool>> filter = null);
+        Task<T> AddAsync(T entity);
+        Task<T> UpdateAsync(T entity);
+        void DeleteAsync(T entity);
     }
 }
