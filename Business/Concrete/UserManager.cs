@@ -1,4 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
+using DataAccess.Abstract;
 using Entities.Dtos;
 using System;
 using System.Collections.Generic;
@@ -15,6 +19,11 @@ namespace Business.Concrete
         public UserManager(IUserDal userDal)
         {
             _userDal = userDal;
+        }
+
+        public async Task<IDataResult<IList<User>>> GetAll()
+        {
+            return new SuccessDataResult<IList<User>>(await _userDal.GetListAsync());
         }
     }
 }

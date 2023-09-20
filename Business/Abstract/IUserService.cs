@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
+        Task<IDataResult<IList<User>>> GetAll();
     }
 }
