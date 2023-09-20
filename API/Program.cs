@@ -1,3 +1,10 @@
+using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete;
+using DataAccess.Concrete.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IConfiguration>();
+
+builder.Services.AddSingleton<IUserDal, UserDal>();
+builder.Services.AddSingleton<IUserService, UserManager>();
 
 var app = builder.Build();
 
