@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -19,6 +22,12 @@ namespace Business.Concrete
         public UserManager(IUserDal userDal)
         {
             _userDal = userDal;
+        }
+
+        public async Task<IResult> Add(User user)
+        {
+            var result = await _userDal.AddAsync(user);
+            return new SuccessResult(Messages.Successful);
         }
 
         public async Task<IDataResult<IList<User>>> GetAll()

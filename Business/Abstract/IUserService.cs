@@ -11,5 +11,6 @@ namespace Business.Abstract
     public interface IUserService
     {
         Task<IDataResult<IList<User>>> GetAll();
+        Task<IResult> Add(User user);
     }
 }
