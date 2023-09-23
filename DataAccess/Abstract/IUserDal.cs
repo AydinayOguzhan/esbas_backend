@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface IUserDal: IEntityRepositoryAsync<User>
     {
+        public Task<List<OperationClaim>> GetClaims(User user);
     }
 }

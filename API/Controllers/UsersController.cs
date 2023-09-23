@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAll")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _userService.GetAll();

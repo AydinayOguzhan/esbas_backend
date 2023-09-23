@@ -26,5 +26,22 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+            var userToLogin = await _authService.Login(loginDto);
+            if (!userToLogin.Success)
+            {
+                return BadRequest(userToLogin);
+            }
+
+            var result = await _authService.CreateAccessToken(userToLogin.Data);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

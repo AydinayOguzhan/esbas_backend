@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac.Validation;
@@ -30,9 +31,20 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Successful);
         }
 
+        [SecuredOperations("admin")]
         public async Task<IDataResult<IList<User>>> GetAll()
         {
             return new SuccessDataResult<IList<User>>(await _userDal.GetListAsync());
+        }
+
+        public async Task<IDataResult<User>> GetByEmail(string email)
+        {
+            return new SuccessDataResult<User>(await _userDal.GetAsync(u => u.Email == email));
+        }
+
+        public async Task<IDataResult<List<OperationClaim>>> GetClaims(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(await _userDal.GetClaims(user));
         }
     }
 }
