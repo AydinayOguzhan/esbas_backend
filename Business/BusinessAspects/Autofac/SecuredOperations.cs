@@ -1,7 +1,8 @@
-﻿using Business.Constants;
+﻿//using Business.Constants;
 using Castle.DynamicProxy;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Messages;
 using Core.Utilities.Security.IOC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ namespace Business.BusinessAspects.Autofac
                     return;
                 }
             }
-            throw new Exception(Messages.AuthorizationDenied);
+            throw new Exception(AspectMessages.AuthorizationDenied);
         }
     }
 

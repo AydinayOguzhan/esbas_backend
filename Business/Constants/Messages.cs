@@ -14,6 +14,5 @@ namespace Business.Constants
         public static string UserDoesNotExist = "User doesn't exist";
         public static string PasswordError = "Email or password wrong";
         public static string SuccessfulLogin = "Login successful";
-        public static string AuthorizationDenied = "Authorization denied";
     }
 }

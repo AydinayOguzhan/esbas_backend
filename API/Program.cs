@@ -65,11 +65,6 @@ internal class Program
             build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
         }));
 
-        //builder.Services.AddSingleton<IUserDal, UserDal>();
-        //builder.Services.AddSingleton<IUserService, UserManager>();
-
-        //builder.Services.AddSingleton<IAuthService, AuthManager>();
-
         var app = builder.Build();
 
 
@@ -79,6 +74,8 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.ConfigureCustomExceptionMiddleware();
 
         app.UseCors("corspolicy");
 
