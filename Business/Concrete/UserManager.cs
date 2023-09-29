@@ -2,6 +2,7 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Cache;
 using Core.Aspect.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
@@ -25,12 +26,14 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
+        [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> Add(User user)
         {
             var result = await _userDal.AddAsync(user);
             return new SuccessResult(Messages.Successful);
         }
 
+        [CacheAspect]
         [SecuredOperations("admin")]
         public async Task<IDataResult<IList<User>>> GetAll()
         {

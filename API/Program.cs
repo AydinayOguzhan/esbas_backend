@@ -75,7 +75,10 @@ internal class Program
             app.UseSwaggerUI();
         }
 
-        app.ConfigureCustomExceptionMiddleware();
+        if (app.Environment.IsProduction())
+        {
+            app.ConfigureCustomExceptionMiddleware();
+        }
 
         app.UseCors("corspolicy");
 
