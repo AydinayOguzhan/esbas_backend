@@ -13,8 +13,9 @@ namespace Business.Abstract
     public interface IAuthService
     {
         Task<IResult> Register(RegisterDto registerDto);
-        Task<IDataResult<User>> Login(LoginDto loginDto);
+        Task<IDataResult<Student>> Login(LoginDto loginDto);
         Task<IResult> UserExists(string email);
-        Task<IDataResult<AccessToken>> CreateAccessToken(User user);
+        Task<IDataResult<AccessToken>> CreateAccessToken(Student user);
+        Task<IResult> UpdateUser(RegisterDto registerDto);
     }
 }

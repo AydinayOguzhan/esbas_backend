@@ -43,5 +43,17 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPost("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(RegisterDto registerDto)
+        {
+            var result = await _authService.UpdateUser(registerDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

@@ -18,36 +18,36 @@ namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        private IUserService _userService;
+        private IStudentService _studentService;
         private ITokenHelper _tokenHelper;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        public AuthManager(IStudentService userService, ITokenHelper tokenHelper)
         {
-            _userService = userService;
+            _studentService = userService;
             _tokenHelper = tokenHelper;
         }
 
-        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(Student user)
         {
-            var claims = await _userService.GetClaims(user);
+            var claims = await _studentService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims.Data);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.Successful);
         }
 
-        public async Task<IDataResult<User>> Login(LoginDto loginDto)
+        public async Task<IDataResult<Student>> Login(LoginDto loginDto)
         {
-            var userToCheck = await _userService.GetByEmail(loginDto.Email);
+            var userToCheck = await _studentService.GetByEmail(loginDto.Email);
             if (userToCheck.Data == null)
             {
-                return new ErrorDataResult<User>(Messages.UserDoesNotExist);
+                return new ErrorDataResult<Student>(Messages.UserDoesNotExist);
             }
 
             if (!HashingHelper.VerifyPasswordHash(loginDto.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
             {
-                return new ErrorDataResult<User>(Messages.PasswordError);
+                return new ErrorDataResult<Student>(Messages.PasswordError);
             }
 
-            return new SuccessDataResult<User>(userToCheck.Data, Messages.SuccessfulLogin);
+            return new SuccessDataResult<Student>(userToCheck.Data, Messages.SuccessfulLogin);
         }
 
         [ValidationAspect(typeof(RegisterValidator))]
@@ -55,22 +55,55 @@ namespace Business.Concrete
         {
             byte[] passwordSalt, passwordHash;
             HashingHelper.CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
-            User user = new User
+            Student user = new Student
             {
                 Email = registerDto.Email,
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
                 Status = true,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                ContactNumber = registerDto.ContactNumber,
+                GenderId = registerDto.GenderId,
+                MaritalStatusId = registerDto.MaritalStatusId,
+                Username = registerDto.Username
             };
-            var result = await _userService.Add(user);
+            var result = await _studentService.Add(user);
+            return new SuccessResult(Messages.Successful);
+        }
+
+        [ValidationAspect(typeof(RegisterValidator))]
+        public async Task<IResult> UpdateUser(RegisterDto registerDto)
+        {
+            var userToCheck = await _studentService.GetByEmail(registerDto.Email);
+            if (userToCheck.Data == null)
+            {
+                return new ErrorDataResult<Student>(Messages.UserDoesNotExist);
+            }
+
+            byte[] passwordSalt, passwordHash;
+            HashingHelper.CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
+            Student user = new Student
+            {
+                Id = userToCheck.Data.Id,
+                Email = registerDto.Email,
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName,
+                Status = true,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                ContactNumber = registerDto.ContactNumber,
+                GenderId = registerDto.GenderId,
+                MaritalStatusId = registerDto.MaritalStatusId,
+                Username = registerDto.Username
+            };
+            var result = await _studentService.Update(user);
             return new SuccessResult(Messages.Successful);
         }
 
         public async Task<IResult> UserExists(string email)
         {
-            var result = await _userService.GetByEmail(email);
+            var result = await _studentService.GetByEmail(email);
             if (result.Data == null) return new SuccessResult(Messages.UserDoesNotExist);
             else return new ErrorResult(Messages.UserAlreadyExists);
         }

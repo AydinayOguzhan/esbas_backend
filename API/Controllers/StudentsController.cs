@@ -8,20 +8,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class StudentsController : ControllerBase
     {
-        private IUserService _userService;
+        private IStudentService _studentService;
 
-        public UsersController(IUserService userService)
+        public StudentsController(IStudentService userService)
         {
-            _userService = userService;
+            _studentService = userService;
         }
 
         [HttpGet("GetAll")]
-        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _userService.GetAll();
+            var result = await _studentService.GetAll();
             if (result.Success)
             {
                 return Ok(result);

@@ -22,8 +22,8 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserDal>().As<IUserDal>();
-            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<StudentDal>().As<IStudentDal>();
+            builder.RegisterType<StudentManager>().As<IStudentService>();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();

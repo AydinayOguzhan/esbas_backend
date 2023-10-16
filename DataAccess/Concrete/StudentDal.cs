@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
-    public class UserDal : EfEntityRepositoryAsyncBase<User, EfContext>, IUserDal
+    public class StudentDal : EfEntityRepositoryAsyncBase<Student, EfContext>, IStudentDal
     {
-        public async Task<List<OperationClaim>> GetClaims(User user)
+        public async Task<List<OperationClaim>> GetClaims(Student user)
         {
             using (var context = new EfContext())
             {
