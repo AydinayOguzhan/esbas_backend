@@ -31,6 +31,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CourseManager>().As<ICourseService>();
             builder.RegisterType<CourseDal>().As<ICourseDal>();
 
+            builder.RegisterType<StudentCourseManager>().As<IStudentCourseService>();
+            builder.RegisterType<StudentCourseDal>().As<IStudentCourseDal>();
+
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

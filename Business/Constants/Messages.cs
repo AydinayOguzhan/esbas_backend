@@ -15,5 +15,6 @@ namespace Business.Constants
         public static string PasswordError = "Email or password wrong";
         public static string SuccessfulLogin = "Login successful";
         public static string CourseAlreadyExists = "This course is already exist";
+        public static string CourseAlreadyTaken = "This course has already been taken";
     }
 }
