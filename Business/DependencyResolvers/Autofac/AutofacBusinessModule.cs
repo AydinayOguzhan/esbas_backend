@@ -28,6 +28,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<CourseManager>().As<ICourseService>();
+            builder.RegisterType<CourseDal>().As<ICourseDal>();
+
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
