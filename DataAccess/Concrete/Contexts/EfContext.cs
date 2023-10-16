@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Entities.Concrete;
 
 namespace DataAccess.Concrete.Contexts
 {
@@ -25,9 +26,31 @@ namespace DataAccess.Concrete.Contexts
         }
 
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Student> Students { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<MaritalStatus> MaritalStatuses { get; set; }
+        public DbSet<StudentCourse> StudentCourses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Gender>().HasData(
+                new Gender { Id=1, Name = "Kadın", Status = true },
+                new Gender { Id = 2, Name = "Erkek", Status = true }
+            );
+
+            modelBuilder.Entity<MaritalStatus>().HasData(
+                new MaritalStatus { Id = 1, Name = "Evli", Status = true },
+                new MaritalStatus { Id = 2, Name = "Bekar", Status = true }
+            );
+
+            modelBuilder.Entity<OperationClaim>().HasData(
+                new OperationClaim { Id = 1, Name = "Admin", Status = true },
+                new OperationClaim { Id = 2, Name = "User", Status = true }
+            );
+        }
     }
 }

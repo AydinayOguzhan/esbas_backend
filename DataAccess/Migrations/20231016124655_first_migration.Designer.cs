@@ -3,6 +3,7 @@ using DataAccess.Concrete.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(EfContext))]
-    partial class EfContextModelSnapshot : ModelSnapshot
+    [Migration("20231016124655_first_migration")]
+    partial class first_migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,20 +42,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperationClaims");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Admin",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "User",
-                            Status = true
-                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Student", b =>
@@ -169,20 +158,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Kadın",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Erkek",
-                            Status = true
-                        });
                 });
 
             modelBuilder.Entity("Entities.Concrete.MaritalStatus", b =>
@@ -203,20 +178,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MaritalStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Evli",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Bekar",
-                            Status = true
-                        });
                 });
 
             modelBuilder.Entity("Entities.Concrete.StudentCourse", b =>
