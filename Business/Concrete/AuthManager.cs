@@ -73,29 +73,27 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(RegisterValidator))]
-        public async Task<IResult> UpdateUser(RegisterDto registerDto)
+        public async Task<IResult> UpdateUser(StudentUpdateDto studentUpdateDto)
         {
-            var userToCheck = await _studentService.GetByEmail(registerDto.Email);
+            var userToCheck = await _studentService.GetByEmail(studentUpdateDto.Email);
             if (userToCheck.Data == null)
             {
                 return new ErrorDataResult<Student>(Messages.UserDoesNotExist);
             }
 
-            byte[] passwordSalt, passwordHash;
-            HashingHelper.CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
             Student user = new Student
             {
                 Id = userToCheck.Data.Id,
-                Email = registerDto.Email,
-                FirstName = registerDto.FirstName,
-                LastName = registerDto.LastName,
+                Email = studentUpdateDto.Email,
+                FirstName = studentUpdateDto.FirstName,
+                LastName = studentUpdateDto.LastName,
                 Status = true,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                ContactNumber = registerDto.ContactNumber,
-                GenderId = registerDto.GenderId,
-                MaritalStatusId = registerDto.MaritalStatusId,
-                Username = registerDto.Username
+                PasswordHash = userToCheck.Data.PasswordHash,
+                PasswordSalt = userToCheck.Data.PasswordSalt,
+                ContactNumber = studentUpdateDto.ContactNumber,
+                GenderId = studentUpdateDto.GenderId,
+                MaritalStatusId = studentUpdateDto.MaritalStatusId,
+                Username = studentUpdateDto.Username
             };
             var result = await _studentService.Update(user);
             return new SuccessResult(Messages.Successful);

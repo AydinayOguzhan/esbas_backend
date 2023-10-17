@@ -44,10 +44,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("UpdateUser")]
-        public async Task<IActionResult> UpdateUser(RegisterDto registerDto)
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(StudentUpdateDto studentUpdateDto)
         {
-            var result = await _authService.UpdateUser(registerDto);
+            var result = await _authService.UpdateUser(studentUpdateDto);
             if (result.Success)
             {
                 return Ok(result);
