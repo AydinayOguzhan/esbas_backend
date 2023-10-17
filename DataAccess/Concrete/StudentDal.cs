@@ -2,6 +2,7 @@
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.Contexts;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,31 @@ namespace DataAccess.Concrete
                              select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name, Status = operationClaim.Status };
                 return await result.ToListAsync();
 
+            }
+        }
+
+        public async Task<StudentDetailsDto> GetStudentDetailsByStudentId(int studentId)
+        {
+            using (var context = new EfContext())
+            {
+                var result = from student in context.Students
+                             join gender in context.Genders
+                                on student.GenderId equals gender.Id
+                             join maritalStatus in context.MaritalStatuses
+                                on student.MaritalStatusId equals maritalStatus.Id
+                             select new StudentDetailsDto
+                             {
+                                 ContactNumber = student.ContactNumber,
+                                 Username = student.Username,
+                                 Email = student.Email,
+                                 FirstName = student.FirstName,
+                                 LastName = student.LastName,
+                                 GenderId = student.GenderId,
+                                 GenderName = gender.Name,
+                                 MaritalStatusId = student.MaritalStatusId,
+                                 MaritalStatusName = maritalStatus.Name
+                             };
+                return await result.FirstOrDefaultAsync();
             }
         }
     }

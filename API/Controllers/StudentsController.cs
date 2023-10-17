@@ -27,5 +27,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("GetStudentDetailsByStudentId")]
+        public async Task<IActionResult> GetStudentDetailsByStudentId(int studentId)
+        {
+            var result = await _studentService.GetStudentDetailsByStudentId(studentId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(Student student)
+        {
+            var result = await _studentService.Delete(student);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

@@ -33,6 +33,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Successful);
         }
 
+        [CacheRemoveAspect("IStudentService.Get")]
+        public async Task<IResult> Delete(Student student)
+        {
+            _userDal.DeleteAsync(student);
+            return new SuccessResult(Messages.Successful);
+        }
+
         [CacheAspect]
         public async Task<IDataResult<IList<Student>>> GetAll()
         {
@@ -48,6 +55,12 @@ namespace Business.Concrete
         public async Task<IDataResult<List<OperationClaim>>> GetClaims(Student user)
         {
             return new SuccessDataResult<List<OperationClaim>>(await _userDal.GetClaims(user));
+        }
+
+        [CacheAspect]
+        public async Task<IDataResult<StudentDetailsDto>> GetStudentDetailsByStudentId(int studentId)
+        {
+            return new SuccessDataResult<StudentDetailsDto>(await _userDal.GetStudentDetailsByStudentId(studentId));
         }
 
         [CacheRemoveAspect("IStudentService.Get")]
