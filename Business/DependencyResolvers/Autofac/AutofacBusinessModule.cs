@@ -37,6 +37,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<GenderManager>().As<IGenderService>();
             builder.RegisterType<GenderDal>().As<IGenderDal>();
 
+            builder.RegisterType<MaritalStatusManager>().As<IMaritalStatusService>();
+            builder.RegisterType<MaritalStatusDal>().As<IMaritalStatusDal>();
+
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
