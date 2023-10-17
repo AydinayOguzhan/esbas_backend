@@ -17,6 +17,6 @@ namespace Business.Abstract
         Task<IDataResult<List<OperationClaim>>> GetClaims(Student user);
         Task<IResult> Update(Student user);
         Task<IDataResult<StudentDetailsDto>> GetStudentDetailsByStudentId(int studentId);
-        Task<IResult> Delete(Student student);
+        Task<IResult> Delete(int studentId);
     }
 }

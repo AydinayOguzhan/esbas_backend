@@ -19,54 +19,60 @@ namespace Business.Concrete
 {
     public class StudentManager: IStudentService
     {
-        private IStudentDal _userDal;
+        private IStudentDal _studentDal;
 
-        public StudentManager(IStudentDal userDal)
+        public StudentManager(IStudentDal studentDal)
         {
-            _userDal = userDal;
+            _studentDal = studentDal;
         }
 
         [CacheRemoveAspect("IStudentService.Get")]
         public async Task<IResult> Add(Student user)
         {
-            var result = await _userDal.AddAsync(user);
+            var result = await _studentDal.AddAsync(user);
             return new SuccessResult(Messages.Successful);
         }
 
         [CacheRemoveAspect("IStudentService.Get")]
-        public async Task<IResult> Delete(Student student)
+        public async Task<IResult> Delete(int studentId)
         {
-            _userDal.DeleteAsync(student);
+            var student = await _studentDal.GetAsync(s => s.Id == studentId);
+            if (student == null)
+            {
+                return new ErrorResult(Messages.UserDoesNotExist);
+            }
+
+            _studentDal.DeleteAsync(student);
             return new SuccessResult(Messages.Successful);
         }
 
         [CacheAspect]
         public async Task<IDataResult<IList<Student>>> GetAll()
         {
-            return new SuccessDataResult<IList<Student>>(await _userDal.GetListAsync());
+            return new SuccessDataResult<IList<Student>>(await _studentDal.GetListAsync());
         }
 
         [CacheAspect]
         public async Task<IDataResult<Student>> GetByEmail(string email)
         {
-            return new SuccessDataResult<Student>(await _userDal.GetAsync(u => u.Email == email));
+            return new SuccessDataResult<Student>(await _studentDal.GetAsync(u => u.Email == email));
         }
 
         public async Task<IDataResult<List<OperationClaim>>> GetClaims(Student user)
         {
-            return new SuccessDataResult<List<OperationClaim>>(await _userDal.GetClaims(user));
+            return new SuccessDataResult<List<OperationClaim>>(await _studentDal.GetClaims(user));
         }
 
         [CacheAspect]
         public async Task<IDataResult<StudentDetailsDto>> GetStudentDetailsByStudentId(int studentId)
         {
-            return new SuccessDataResult<StudentDetailsDto>(await _userDal.GetStudentDetailsByStudentId(studentId));
+            return new SuccessDataResult<StudentDetailsDto>(await _studentDal.GetStudentDetailsByStudentId(studentId));
         }
 
         [CacheRemoveAspect("IStudentService.Get")]
         public async Task<IResult> Update(Student user)
         {
-            var result = await _userDal.UpdateAsync(user);
+            var result = await _studentDal.UpdateAsync(user);
             return new SuccessResult(Messages.Successful);
         }
     }
